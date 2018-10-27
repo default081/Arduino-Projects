@@ -81,11 +81,11 @@ void loop() {
     isFixDistancePressed = 0;
   }
   if(isFixDistancePressed == 1 && buttonStateSenBtnOne == HIGH && buttonStateSenBtnTwo == HIGH){
-    digitalWrite(finalLed, HIGH);
+    digitalWrite(finalLed, LOW); /*поменяли high и low*/
     delay(7000);
   }
   else{
-    digitalWrite(finalLed, LOW);
+    digitalWrite(finalLed, HIGH);
     }
 
 
