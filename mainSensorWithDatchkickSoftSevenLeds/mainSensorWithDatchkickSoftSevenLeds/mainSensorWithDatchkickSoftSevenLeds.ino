@@ -1,18 +1,18 @@
 /*программа в которой фиксированая кнопка стала обычной*/
 
 /*переменные кнопок и датчика*/
-const int SenBtnFix = 10;
-const int SenBtnOne = 9;
-const int SenBtnTwo = 4;
-const int DistanceSensor = 3;
+const int SenBtnFix = 7; // 8
+const int SenBtnOne = 3; // 4
+const int SenBtnTwo = 4; // 5
+const int DistanceSensor = 2; // 3
 
 /*переменные светодиодов*/
-const int finalLed = 6;
-const int fixedLed = 7;
-const int ledSevenOne = 11;
-const int ledSevenTwo = 12;
-const int ledSevenThree = 8;
-const int ledSevenFour = 2;
+const int finalLed = 5; // 6
+const int fixedLed = 6;// 7
+const int ledSevenOne = 11; // 12
+const int ledSevenTwo = 10; // 11
+const int ledSevenThree = 9; // 10
+const int ledSevenFour = 8; // 9
 
 /*переменные состояния кнопок*/
 int buttonStateSenBtnFix = 0;
@@ -45,11 +45,31 @@ void loop() {
   buttonStateSenBtnOne = digitalRead(SenBtnOne);
   buttonStateSenBtnTwo = digitalRead(SenBtnTwo);
   buttonStateDistanceSensor = digitalRead(DistanceSensor);
+
+/*блок с низу отвечает за дисплей передвинул из за того что дисплей зажигается после светодиода*/
+  if(buttonStateSenBtnOne == HIGH){
+    digitalWrite(ledSevenThree, HIGH);
+  }
+  else if(buttonStateSenBtnTwo == HIGH){
+    digitalWrite(ledSevenFour, HIGH);
+  }
+  else if(buttonStateSenBtnTwo == HIGH && buttonStateSenBtnOne == HIGH){
+    digitalWrite(ledSevenThree, LOW);
+    digitalWrite(ledSevenFour, LOW);
+    digitalWrite(ledSevenThree, HIGH);
+    digitalWrite(ledSevenFour, HIGH);
+  }
+  else{
+    digitalWrite(ledSevenThree, LOW);
+    digitalWrite(ledSevenFour, LOW);
+  } 
+  /*-------------------------*/
+
   
   if(buttonStateSenBtnFix == HIGH){
     isFixbtnPressed = 1;
     digitalWrite(fixedLed, HIGH);
-    delay(3000);
+    delay(500);
     digitalWrite(fixedLed, LOW);
   }
  
@@ -70,8 +90,11 @@ void loop() {
 
 
   /*робота с семи контаутнами светодиодами*/
-  if(isFixbtnPressed == HIGH){
+  if(buttonStateSenBtnFix == HIGH){
     digitalWrite(ledSevenOne, HIGH);
+  }
+  else{
+    digitalWrite(ledSevenOne, LOW);
   }
   if(buttonStateDistanceSensor == LOW){
     digitalWrite(ledSevenTwo, HIGH);
@@ -79,23 +102,6 @@ void loop() {
   else{
     digitalWrite(ledSevenTwo, LOW);
   }
-  if(buttonStateSenBtnOne == HIGH){
-    digitalWrite(ledSevenThree, HIGH);
-  }
-  else if(buttonStateSenBtnTwo == HIGH){
-    digitalWrite(ledSevenFour, HIGH);
-  }
-  else if(buttonStateSenBtnTwo == HIGH && buttonStateSenBtnOne == HIGH){
-    digitalWrite(ledSevenThree, LOW);
-    digitalWrite(ledSevenFour, LOW);
-    digitalWrite(ledSevenThree, HIGH);
-    digitalWrite(ledSevenFour, HIGH);
-  }
-  else{
-    digitalWrite(ledSevenThree, LOW);
-    digitalWrite(ledSevenFour, LOW);
-  }
-
 
   /*reset button*/
   if(digitalRead(A1) == HIGH)  
