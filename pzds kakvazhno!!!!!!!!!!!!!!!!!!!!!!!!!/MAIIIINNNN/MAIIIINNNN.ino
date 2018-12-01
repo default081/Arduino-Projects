@@ -4,7 +4,10 @@ const int svtTwelve = 11;
 
 const int svtEleven = 10;
 const int svtThirteen = 9;
-const int svtFourteen = 8; // будет монитром nextion
+const int svtFourteen = 8; // нужный нам светодиод!!!
+
+const int ledFinalOne = 5;
+const int ledFinaltwo = 6;
 
 const int btnOne = 2;
 const int btnTwo = 3;
@@ -18,6 +21,7 @@ int oneRazr = 0;
 int isBtnTwoPres = 0;
 int isBtnTwoPres2 = 0;
 
+
 void setup() {
   pinMode(svtOne, OUTPUT);
   pinMode(svtTwo, OUTPUT);
@@ -25,6 +29,9 @@ void setup() {
   pinMode(svtEleven, OUTPUT);
   pinMode(svtThirteen, OUTPUT);
   pinMode(svtFourteen, OUTPUT);
+  
+  pinMode(ledFinalOne, OUTPUT);
+  pinMode(ledFinaltwo, OUTPUT);
 
   pinMode(btnOne, INPUT);
   pinMode(btnTwo, INPUT);
@@ -72,10 +79,11 @@ void loop(){
      digitalWrite(svtTwo, HIGH);
      digitalWrite(svtThirteen, LOW);
      digitalWrite(svtFourteen, LOW);
+
+     digitalWrite(ledFinaltwo, LOW);
   }
   
   /*если нажата кновка btnTwo то загараем svtEleven, гашу svtTwelve*/
-  /*если нажали btnTwo и переманная которая отвечает за нажатие фикстрованной btn ==  high*/
   if(btnTwoStatus == HIGH && oneRazr == 1){
     digitalWrite(svtEleven, HIGH);
     digitalWrite(svtOne, HIGH);
@@ -85,6 +93,11 @@ void loop(){
     isBtnTwoPres2 = 1;
     digitalWrite(svtThirteen, HIGH);
     digitalWrite(svtFourteen, HIGH);
+    
+    digitalWrite(ledFinalOne, HIGH);
+    digitalWrite(ledFinaltwo, HIGH);
+    delay(1500);
+    digitalWrite(ledFinalOne, LOW);
   }
   
 }

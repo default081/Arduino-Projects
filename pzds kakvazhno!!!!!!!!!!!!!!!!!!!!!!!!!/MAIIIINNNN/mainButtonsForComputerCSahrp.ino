@@ -7,6 +7,7 @@ int isBtnOnePress = 0;
 int isBtnTwoPress = 0;
 int isBtnThreePress = 0;
 
+int raspberry = 13;
 int releOne = 6;
 int releTwo = 7;
 
@@ -26,6 +27,7 @@ void setup() {
   pinMode(buttonPinThree, INPUT);
   pinMode(buttonPinReset, INPUT);
 
+  pinMode(raspberry, OUTPUT);
   pinMode(releOne, OUTPUT);
   pinMode(releTwo, OUTPUT);
 
@@ -40,6 +42,7 @@ void loop() {
 
   if (buttonStateOne == HIGH) {
     Serial.print("1");
+    digitalWrite(raspberry, HIGH); // raspberry сетодиод
     isBtnOnePress = 1;
     delay(250);
   } 

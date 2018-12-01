@@ -1,12 +1,13 @@
+#include <SoftwareSerial.h>
+
 const int svtOne = 13;
 const int svtTwo = 12;
 const int svtTwelve = 11;
 
 const int svtEleven = 10;
 const int svtThirteen = 9;
-const int svtFourteen = 8; // будет монитром nextion
 
-const int btnOne = 2;
+const int btnOne = 10;
 const int btnTwo = 3;
 const int btnFix = 4;
 
@@ -18,26 +19,30 @@ int oneRazr = 0;
 int isBtnTwoPres = 0;
 int isBtnTwoPres2 = 0;
 
+SoftwareSerial mySerial(7, 6); 
+
 void setup() {
   pinMode(svtOne, OUTPUT);
   pinMode(svtTwo, OUTPUT);
   pinMode(svtTwelve, OUTPUT);
   pinMode(svtEleven, OUTPUT);
   pinMode(svtThirteen, OUTPUT);
-  pinMode(svtFourteen, OUTPUT);
 
   pinMode(btnOne, INPUT);
   pinMode(btnTwo, INPUT);
   pinMode(btnFix, INPUT);
 
   Serial.begin(9600); 
+  while (!Serial) { ; }
+  mySerial.begin(9600); 
 }
 
 void loop(){
   btnOneStatus = digitalRead(btnOne);
   btnTwoStatus = digitalRead(btnTwo);
   btnFixStatus = digitalRead(btnFix);
-  
+
+  String sendThis = "pic "; 
 
   if(isBtnTwoPres2 == 0){
       digitalWrite(svtOne, HIGH);
@@ -71,20 +76,34 @@ void loop(){
      digitalWrite(svtEleven, LOW);
      digitalWrite(svtTwo, HIGH);
      digitalWrite(svtThirteen, LOW);
-     digitalWrite(svtFourteen, LOW);
   }
-  
+//    if(btnTwoStatus == LOW && oneRazr == 0){
+//    sendThis.concat("6,35,1"); //open
+//    }
   /*если нажата кновка btnTwo то загараем svtEleven, гашу svtTwelve*/
-  /*если нажали btnTwo и переманная которая отвечает за нажатие фикстрованной btn ==  high*/
   if(btnTwoStatus == HIGH && oneRazr == 1){
     digitalWrite(svtEleven, HIGH);
     digitalWrite(svtOne, HIGH);
     isBtnTwoPres = 1;
-    delay(8000);
+    delay(2000);
     digitalWrite(svtEleven, HIGH);
     isBtnTwoPres2 = 1;
     digitalWrite(svtThirteen, HIGH);
-    digitalWrite(svtFourteen, HIGH);
+//    sendThis.concat/("6,30,2"); //close
   }
-  
+    
+    delay(300); 
+  writeString(sendThis); 
+
+}
+
+
+void writeString(String stringData) { 
+  for (int i = 0; i < stringData.length(); i++){
+    mySerial.write(stringData[i]);   
+  }
+  Serial.print("GO");
+  mySerial.write(0xff); 
+  mySerial.write(0xff); 
+  mySerial.write(0xff);
 }

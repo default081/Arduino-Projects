@@ -1,0 +1,91 @@
+#include <SoftwareSerial.h>
+
+const int svtOne = 13;
+const int svtTwo = 12;
+const int svtTwelve = 11;
+
+const int svtEleven = 10;
+const int svtThirteen = 9;
+
+const int btnOne = 10;
+const int btnTwo = 3;
+const int btnFix = 4;
+
+int btnOneStatus = 0;
+int btnTwoStatus = 0;
+int btnFixStatus = 0;
+
+int oneRazr = 0;
+int isBtnTwoPres = 0;
+int isBtnTwoPres2 = 0;
+
+//SoftwareSerial mySerial(7, 6); 
+
+void setup() {
+  pinMode(svtOne, OUTPUT);
+  pinMode(svtTwo, OUTPUT);
+  pinMode(svtTwelve, OUTPUT);
+  pinMode(svtEleven, OUTPUT);
+  pinMode(svtThirteen, OUTPUT);
+
+  pinMode(btnOne, INPUT);
+  pinMode(btnTwo, INPUT);
+  pinMode(btnFix, INPUT);
+
+  Serial.begin(9600); 
+  while (!Serial) { ; }
+  mySerial.begin(9600); 
+}
+
+void loop(){
+  btnOneStatus = digitalRead(btnOne);
+  btnTwoStatus = digitalRead(btnTwo);
+  btnFixStatus = digitalRead(btnFix);
+  
+
+  if(isBtnTwoPres2 == 0){
+      digitalWrite(svtOne, HIGH);
+      delay(300);
+      digitalWrite(svtOne, LOW);
+      delay(300);
+  }
+
+  /*проверяем нажата ли кнопка 2 для зажиганмя svtTwelve через переменную isBtnTwoPres*/
+  if(isBtnTwoPres == 0){
+    digitalWrite(svtTwelve, HIGH);
+  }
+  if(isBtnTwoPres == 1){
+    digitalWrite(svtTwelve, LOW);
+  }
+  
+  /*проверяем нажата ли кнопка btnFix и в завичисомти от этого даем красный свет кнопке btnOne*/  
+  if(btnFixStatus == LOW){
+    digitalWrite(svtTwo, HIGH);
+    oneRazr = 0;
+  }
+  else{
+    oneRazr = 1;
+    digitalWrite(svtTwo, LOW);
+  }
+  // для резета!!!!!!!!!!!!!!!!!!!!!!!!!
+  if(btnOneStatus == HIGH && oneRazr == 0){
+     oneRazr = 0;
+     isBtnTwoPres = 0;
+     isBtnTwoPres2 = 0;
+     digitalWrite(svtEleven, LOW);
+     digitalWrite(svtTwo, HIGH);
+     digitalWrite(svtThirteen, LOW);
+  }
+  
+  /*если нажата кновка btnTwo то загараем svtEleven, гашу svtTwelve*/
+  if(btnTwoStatus == HIGH && oneRazr == 1){
+    digitalWrite(svtEleven, HIGH);
+    digitalWrite(svtOne, HIGH);
+    isBtnTwoPres = 1;
+    delay(8000);
+    digitalWrite(svtEleven, HIGH);
+    isBtnTwoPres2 = 1;
+    digitalWrite(svtThirteen, HIGH);
+  }
+  
+}
