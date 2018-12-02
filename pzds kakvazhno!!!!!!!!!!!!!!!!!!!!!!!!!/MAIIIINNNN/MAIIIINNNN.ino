@@ -1,3 +1,5 @@
+/*Рабочия программа ядра системы*/
+
 const int svtOne = 13;
 const int svtTwo = 12;
 const int svtTwelve = 11;

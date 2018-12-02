@@ -1,5 +1,3 @@
-/*измененный скетч с добавленным реле для raspberry/nextion на кнопке 1
-Главный Скетч! */
 const int buttonPinOne = 8;     
 const int buttonPinTwo = 9;     
 const int buttonPinThree = 10;     
@@ -11,7 +9,6 @@ int isBtnThreePress = 0;
 
 int releOne = 6;
 int releTwo = 7;
-int releDisolay = 13; //светодиод для nextion 
 
 //const int buttonPinOne = 48;     
 //const int buttonPinTwo = 46;     
@@ -31,7 +28,6 @@ void setup() {
 
   pinMode(releOne, OUTPUT);
   pinMode(releTwo, OUTPUT);
-  pinMode(releDisolay, OUTPUT);
 
   Serial.begin(9600);        
 }
@@ -43,7 +39,6 @@ void loop() {
   buttonStateReset = digitalRead(buttonPinReset);
 
   if (buttonStateOne == HIGH) {
-    digitalWrite(releDisolay, HIGH); 
     Serial.print("1");
     isBtnOnePress = 1;
     delay(250);
