@@ -1,18 +1,18 @@
 /*программа в которой фиксированая кнопка стала обычной*/
 
 /*переменные кнопок и датчика*/
-const int SenBtnFix = 7; // 8
-const int SenBtnOne = 3; // 4
-const int SenBtnTwo = 4; // 5
-const int DistanceSensor = 2; // 3
+const int SenBtnFix = 7; 
+const int SenBtnOne = 3; 
+const int SenBtnTwo = 4; 
+const int DistanceSensor = 2; 
 
 /*переменные светодиодов*/
-const int finalLed = 5; // 6
-const int fixedLed = 6;// 7
-const int ledSevenOne = 11; // 12
-const int ledSevenTwo = 10; // 11
-const int ledSevenThree = 9; // 10
-const int ledSevenFour = 8; // 9
+const int finalLed = 5; 
+const int fixedLed = 13;// раньше был - 6
+const int ledSevenOne = 11; 
+const int ledSevenTwo = 10; 
+const int ledSevenThree = 9; 
+const int ledSevenFour = 8; 
 
 /*переменные состояния кнопок*/
 int buttonStateSenBtnFix = 0;
