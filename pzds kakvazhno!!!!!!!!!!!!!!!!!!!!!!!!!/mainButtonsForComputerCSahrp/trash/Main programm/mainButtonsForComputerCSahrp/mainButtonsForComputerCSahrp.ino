@@ -1,3 +1,4 @@
+// Main program
 const int buttonPinOne = 8;     
 const int buttonPinTwo = 9;     
 const int buttonPinThree = 10;     
@@ -10,10 +11,8 @@ int isBtnThreePress = 0;
 int releOne = 6;
 int releTwo = 7;
 
-//const int buttonPinOne = 48;     
-//const int buttonPinTwo = 46;     
-//const int buttonPinThree = 44;     
-//const int buttonPinReset = 42;
+int lastLed = 13;
+int lastLedStatus = 0;
 
 int buttonStateOne = 0;         
 int buttonStateTwo = 0;         
@@ -28,6 +27,8 @@ void setup() {
 
   pinMode(releOne, OUTPUT);
   pinMode(releTwo, OUTPUT);
+  pinMode(lastLed, OUTPUT);
+
 
   Serial.begin(9600);        
 }
@@ -38,8 +39,16 @@ void loop() {
   buttonStateThree = digitalRead(buttonPinThree);
   buttonStateReset = digitalRead(buttonPinReset);
 
+  if(lastLedStatus == 0){
+    digitalWrite(lastLed, HIGH);
+  }
+  else{
+    digitalWrite(lastLed, LOW);
+  }
+
   if (buttonStateOne == HIGH) {
     Serial.print("1");
+    lastLedStatus = 1; // если унопка нажата, гасим светодиод
     isBtnOnePress = 1;
     delay(250);
   } 
@@ -68,6 +77,7 @@ void loop() {
       digitalWrite(releOne, LOW);
       delay(60000);
       digitalWrite(releTwo, LOW);
+      lastLedStatus = 0; // Зажигаем светодиод
       isBtnOnePress = isBtnTwoPress = isBtnThreePress = 0;
   }
 
